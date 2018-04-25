@@ -1,13 +1,15 @@
 ﻿using System;
 using System.IO;
-using System.Windows;
 
-namespace CefSharp.MinimalExample.Wpf
+namespace CefSharp.MinimalExample.WinForms
 {
-    public partial class App : Application
+    internal class Launcher
     {
-        public App()
+        internal void Launch()
         {
+            //For Windows 7 and above, best to include relevant app.manifest entries as well
+            Cef.EnableHighDPISupport();
+
             var settings = new CefSettings()
             {
                 //By default CefSharp will use an in-memory cache, you need to specify a Cache Folder to persist data
@@ -16,6 +18,9 @@ namespace CefSharp.MinimalExample.Wpf
 
             //Perform dependency check to make sure all relevant resources are in our output directory.
             Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
+
+            var browser = new BrowserForm();
+            browser.Show();
         }
     }
 }
